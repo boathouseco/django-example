@@ -1,0 +1,6 @@
+# Boathouse API Configuration
+BOATHOUSE_CONFIG = {
+    "BOATHOUSE_API": "https://my.boathouse.co/api/v1/",
+    "BOATHOUSE_PORTAL_ID": "7844a538-d99e-4dee-b296-08dc57f5b69a",
+    "BOATHOUSE_SECRET": "c80bc5cc9c7446439d0fa706d725bb63",
+}

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boathouse Example</title>
+      <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+<body>
+    <main class="flex min-h-screen flex-col items-center justify-between p-24">
+       
+        <div class="flex flex-col items-start w-full max-w-5xl flex-1 py-24 gap-6">
+            <h1 class="text-xl font-bold">
+                Django Example Implementation of Boathouse Customer Portals for Paddle
+            </h1>
+            <p>
+                This is the anonymous pricing table loaded from Boathouse using an
+                iframe shown to your website visitors. Click on the button to be
+                redirected to the dummy login.
+            </p>
+            <iframe src="{{ iframe_url }}" frameborder="0" style="width: 100%; height: 500px;"></iframe>
+        </div>
+    </main>
+</body>
+</html>

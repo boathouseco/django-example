@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Page</title>
+      <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <main class="flex min-h-screen flex-col items-center justify-between p-24">
+        <div class="flex flex-col items-start w-full max-w-5xl flex-1 py-24 gap-6">
+            <h1 class="text-xl font-bold">Account Page</h1>
+
+            <p>You are logged in to this application as Paddle Customer ID <b>{{ paddle_customer_id }}</b>.</p>
+
+            <p>This is the return value from the Boathouse API:</p>
+            <div class="max-w-[60em] overflow-scroll">
+                <pre>{{ pretty_boathouse_response }}</pre>
+            </div>
+
+            {% if boathouse.activeSubscriptions|length == 0 %}
+                <div class="font-bold">
+                    This is the pricing table that Boathouse generates for you from
+                    your plan configuration. You can subscribe to a plan using the
+                    test credit card information below:
+                </div>
+                <div style="margin: 5em 0;">{{ boathouse.pricingTableHtml|safe }}</div>
+                <div class="border border-red-500 rounded-xl p-5 bg-red-50 text-base">
+                    <div class="text-lg font-bold">
+                        Use this test credit card for the checkout:
+                    </div>
+                    <ul>
+                        <li>Card: 4000 0566 5566 5556</li>
+                        <li>Name: Any</li>
+                        <li>CVC: 100</li>
+                        <li>Expiry: {{ now|date:'m/Y' }}</li>
+                    </ul>
+                </div>
+            {% else %}
+                <div class="border border-emerald-500 rounded-xl p-5 bg-emerald-50 text-base">
+                    <div class="text-lg font-bold">
+                        You have an active subscription.
+                    </div>
+                    <div>
+                        Click here to open your <a class="underline text-emerald-600" href="{{ boathouse.billingPortalUrl }}">billing portal</a>.
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </main>
+
+    <script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
+    <script type="text/javascript">
+        Paddle.Environment.set("sandbox");
+        Paddle.Initialize({
+            token: 'test_ad79b30a7bab65b54ee5213f2b5',
+            eventCallback: (e) => {
+                if (e.name == "checkout.completed") location.href = "/processing?pids=" + e.data.items.map(x=>x.price_id).join(",");
+            }
+        });
+    </script>
+</body>
+</html>
